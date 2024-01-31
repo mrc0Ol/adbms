@@ -1,0 +1,19 @@
+1. **Create a Sequence Step:**
+   - Drag and drop the "Sequence" step from the Design palette to your transformation canvas in PDI.
+
+2. **Configure the Sequence Step:**
+   - Double-click on the "Sequence" step to open its configuration window.
+   - Configure the properties of the sequence, such as the starting value, increment, and other options.
+
+3. **Connect the Sequence Step to Table Input:**
+   - Drag and drop the "Table Input" step to the canvas and connect it to the "Sequence" step.
+
+4. **Configure the Table Input Step:**
+   - Double-click on the "Table Input" step to open its configuration window.
+   - In the SQL tab, write your SQL query to insert data into the table. Use the generated sequence values where needed.
+   - Map the fields in the "Fields" tab. Map the sequence field to the appropriate column in your table.
+
+5. Add a dummy do nothing to your canvas.
+
+6. **Run the Transformation:**
+   - Save your transformation and run it to generate sequence values and insert data into the table.

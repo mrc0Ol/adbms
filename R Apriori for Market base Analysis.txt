@@ -1,0 +1,16 @@
+CODE:
+data=read.csv("C:/Users/ANIKET S RAUL/Desktop/wbs/data_apriori.csv")
+#reading
+data
+trans=split(data$Products, data$Customer_Id,"Transations")
+trans
+head(trans)
+#install arules library
+install.packages("Matrix", version = "1.4.0", dependencies=TRUE)
+# Load the updated Matrix package
+library(Matrix)
+# Install or load the arules package again
+install.packages("arules", dependencies=TRUE)
+library(arules)
+rules=apriori(trans,parameter = list(support=0.5,confidence=0.9,maxlen=3, minlen=2))
+inspect(rules)

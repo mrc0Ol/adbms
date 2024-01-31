@@ -1,0 +1,42 @@
+CODE:
+data=read.csv("C:/Users/ANIKET S RAUL/Desktop/wbs/Iris1.csv")
+
+#reading data
+data
+head(data,5)
+df<-data(iris)
+head(iris)
+ran=sample(1:nrow(iris),0.9*nrow(iris))
+nor=function(x){(x-min(x))/(max(x))}
+iris_norm=as.data.frame(lapply(iris[,c(1,2,3,4)],nor))
+summary(iris_norm)
+
+#extract traning set
+iris_train<-iris_norm[ran,]
+dim(iris_train)
+
+#extracting testing set
+iris_test<-iris_norm[-ran,]
+dim(iris_test)
+
+#extract the 5th column of train dataset because it wiil be used as'cl'argument in knn function
+iris_target_category<-iris[ran,5]
+
+#extract 5th column if test data set #to measure the accuracy
+iris_test_category<-iris[-ran,5]
+
+#load the pacakage class
+install.packages("class")
+library(class)
+
+#run knn function
+pr<-knn(iris_train,iris_test,cl=iris_target_category,k=13)
+
+#create confusion matrix
+tab<-table(pr,iris_test_category)
+tab
+
+#this function divides the correct prediction by total number #of prediction that tell us how accurate the model is
+
+accuracy<-function (x){sum(diag(x)/(sum(rowSums(x))))*100}
+accuracy(tab) 

@@ -1,0 +1,36 @@
+Code:
+# Install and load required packages
+install.packages("e1071") install.packages("MASS")
+install.packages("lattice") install.packages("ggplot2")
+install.packages("caret")
+library(e1071) library(MASS)
+library(lattice) library(ggplot2)
+library(caret)
+data <- read.csv("C:/Program Files/R/iris1.csv")
+
+# Split the data into training and testing sets
+index <- sample(nrow(data), floor(nrow(data) * 0.7))
+train1 <- data[index, ] test <- data[-index, ]
+xtrain1 <- train1[, -5] ytrain1 <-
+train1$Species
+xtest <- test[, -5]
+ytest <- test$Species
+
+# Create a train control object for cross-validation
+train_control <- trainControl(method = 'cv', number = 10)
+
+# Train the Naive Bayes model using caret
+model <- train(x = xtrain1, y = ytrain1, method = 'nb', trControl = train_control)
+
+# Print the trained model
+print(model)
+
+# Make predictions on the test set
+predictions <- predict(model, newdata = xtest)
+
+# Display the confusion matrix
+conf_matrix <- table(predictions, ytest) print(conf_matrix)
+
+# Calculate the accuracy
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+print(paste("Accuracy:", accuracy))

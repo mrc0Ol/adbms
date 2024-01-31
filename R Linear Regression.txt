@@ -1,0 +1,38 @@
+setwd("C:/Users/ANIKET S RAUL/Desktop/wbs")
+getwd()
+my_data<-mtcars
+my_data
+names(my_data)
+dim(my_data)
+
+#randomize
+my_data<-my_data[sample(nrow(my_data),),]
+head(my_data)
+TrainData<-my_data[1:20,]
+TrainData
+TestData<-my_data[21:32,]
+TestData
+
+#Linear Model
+fit = lm(mpg~hp,data=mtcars)
+summary(fit)
+preds<-predict(fit,newdata = TestData)
+df1<-data.frame(preds,TestData$mpg)
+head(df1)
+
+#install ggplot packages
+install.packages("ggplot2")
+library(ggplot2)
+
+#correaltion
+cor(preds,TestData$mpg)
+plot(mtcars$hp,mtcars$mpg)
+
+#bettermodel
+lmmodell<-lm(mpg~hp+cyl+gear+wt , data= TrainData)
+summary(lmmodell)
+preds_new<-predict(lmmodell,newdata = TestData)
+df2<-data.frame(preds_new,TestData$mpg)
+head(df2)
+cor( TestData$mp,preds_new)
+plot(mtcars$hp+mtcars$cyl+mtcars$gear+mtcars$wt+mtcars$mpg)

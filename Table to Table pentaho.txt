@@ -1,0 +1,32 @@
+1.Open Pentaho Data Integration:
+Launch Pentaho Data Integration on your machine.
+
+2.Create or Open a Transformation:
+Either create a new transformation or open an existing one where you want to perform
+the table copy.
+
+3. Add "Table Input-step:
+• Drag and drop the "Table Input" step from the Design palette to your
+transformation canvas.
+• Double-click on the step to configure it.
+
+4.Configure "Table Input" Step:
+• Select the connection or create a new one for the source table.
+• Specify the SQL query or the table name from which you want to copy the data.
+
+5. Add
+• Drag and drop the "Table Output" step from the Design palette to your transformation canvas.
+• Connect the "Table Input" step to the "Table Output" step.
+
+6.Configure "Table Output' step:
+• Double-click on the "Table Output" step to configure it.
+• Select the connection or create a new one for the destination table.
+• Specify the target table name.
+
+7.Mapping Fields:
+• Go to the "Fields" tab in the "Table Output" step configuration.
+. Map the fields from the source table to the corresponding fields in the destination table.
+
+8. Run the Transformation:
+Save the transformation.
+Run the transformation to copy the data from the source table to the destination table.
