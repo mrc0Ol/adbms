@@ -1,0 +1,55 @@
+Q1. Create table student with attributes stud_id, name, marks with range partitioning and the partitioning
+attribute is marks.
+
+CREATE TABLE STUDENT
+(
+STUD_ID NUMBER,
+NAME VARCHAR(25),
+MARKS NUMBER
+)
+PARTITION BY RANGE(MARKS)
+(
+PARTITION FAIL VALUES LESS THAN(40),
+PARTITION SECOND_CLASS VALUES LESS THAN(60),
+PARTITION FIRST_CLASS VALUES LESS THAN(75),
+PARTITION DIST_CLASS VALUES LESS THAN(100)
+);
+INSERT INTO STUDENT VALUES(32,'SAINATH',96);
+INSERT INTO STUDENT VALUES(25,’ROHIT',75);
+INSERT INTO STUDENT VALUES(6,'PRATHAM',60);
+INSERT INTO STUDENT VALUES(47,'VIVEK',80);
+INSERT INTO STUDENT VALUES(30,'ADITYA',50);
+
+1. Display contents of the table.
+SELECT * FROM STUDENT;
+
+2. Display the details of the students who failed.
+SELECT * FROM STUDENT PARTITION(FAIL);
+
+3. Display the details of the students of “second class”.
+SELECT * FROM STUDENT PARTITION(SECOND_CLASS);
+
+4. Display the details of the students of “First class”.
+SELECT * FROM STUDENT PARTITION(FIRST_CLASS);
+
+5. Display the name of partitions.
+SELECT PARTITION_NAME FROM USER_TAB_PARTITIONS WHERE TABLE_NAME = 'STUDENT';
+
+6. Display the details of students who passed with distinctions.
+SELECT * FROM STUDENT PARTITION(DIST_CLASS);
+
+7. Display the number of students who failed.
+SELECT COUNT(STUD_ID)FROM STUDENT PARTITION(FAIL);
+
+8.Display the details of the student who scored highest marks.
+SELECT * FROM STUDENT WHERE MARKS=(SELECT MAX(MARKS) FROM STUDENT PARTITION (DIST_CLASS));
+
+9. Split the partition fail to f1 with marks less than 30 and f2 to marks less than 45.
+ALTER TABLE STUDENT SPLIT PARTITION FAIL AT(30) INTO (PARTITION F1,PARTITION F2);
+SELECT PARTITION_NAME FROM USER_TAB_PARTITIONS WHERE TABLE_NAME = 'STUDENT';
+
+10. Merge f1, f2 into a new partition pp1;
+ALTER TABLE STUDENT MERGE PARTITIONS F1,F2 INTO PARTITION PP1;
+
+12. Add a partition p_new for storing the marks less than 100.
+ALTER TABLE STUDENT ADD PARTITION P_NEW VALUES LESS THAN(100);
