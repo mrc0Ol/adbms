@@ -1,0 +1,45 @@
+Q1) Create a table Sales with the attribute dept_id, deptname, year_of_sales,region and profit. Perform the
+rollup operation on this table.
+
+CREATE TABLE sales
+(
+ dept_id number,
+ dept_name varchar2(20),
+ year_of_sales number,
+ region varchar2(20),
+ profit number
+);
+INSERT INTO sales values(101,'Sales',2020,'Mumbai','50000');
+INSERT INTO sales values(101,'Sales',2018,'','70000');
+INSERT INTO sales values(101,'Sales',2019,'Mumbai','20000');
+INSERT INTO sales values(101,'Sales',2020,'Delhi','45000');
+INSERT INTO sales values(102,'IT',2018,'Mumbai','40000');
+INSERT INTO sales values(102,'IT',2015,'Mumbai','30000');
+INSERT INTO sales values(102,'IT',2016,'Delhi','10000');
+INSERT INTO sales values(102,'IT',2020,'Mumbai','80000');
+
+Perform the rollup operation on this table.
+
+1. Display year wise total profit.
+SELECT year_of_sales,sum(profit) from sales group by rollup(year_of_sales);
+
+2. Display year wise total profit of each region.
+SELECT year_of_sales,sum(profit),region from sales group by rollup(year_of_sales,region);
+
+3. Display year wise, region wise and department wise total profit for the department ”IT”;.
+SELECT year_of_sales,region,dept_name, sum(profit) from sales group by rollup(year_of_sales,region,dept_name) having dept_name="IT";
+
+4. Display year wise total profit of each department.
+SELECT year_of_sales,sum(profit),dept_name from sales group by rollup(year_of_sales,dept_name);
+
+5. Display region wise total profit of each department.
+SELECT region,sum(profit),dept_name from sales group by rollup(region,dept_name);
+
+6. Display region wise total profit if total profit &gt;28
+SELECT region,sum(profit) from sales group by rollup(region) having sum(profit)>50000;
+
+7. Display region wise total profit.
+SELECT region,sum(profit) from sales group by rollup(region);
+
+8. Display department wise total profit.
+SELECT dept_name,sum(profit) from sales group by rollup(dept_name);

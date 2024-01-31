@@ -1,0 +1,24 @@
+2.2 Cube
+Q3). Implement Cube operation on the same table.
+CREATE TABLE sales
+(
+ dept_id number,
+ dept_name varchar2(20),
+ year_of_sales number,
+ region varchar2(20),
+ profit number
+);
+INSERT INTO sales values(101,'Sales',2020,'Mumbai','50000');
+INSERT INTO sales values(101,'Sales',2018,'','70000');
+INSERT INTO sales values(101,'Sales',2019,'Mumbai','20000');
+INSERT INTO sales values(101,'Sales',2020,'Delhi','45000');
+INSERT INTO sales values(102,'IT',2018,'Mumbai','40000');
+INSERT INTO sales values(102,'IT',2015,'Mumbai','30000');
+INSERT INTO sales values(102,'IT',2016,'Delhi','10000');
+INSERT INTO sales values(102,'IT',2020,'Mumbai','80000');
+
+1. Display year, region and dept wise total profit using cube function.
+Select region,year_of_sales,dept_name,sum(profit) from sales group by cube(year_of_sales,dept_name,region);
+
+2. Display region and dept wise total profit using year_of_sales as partial cube dimension.
+Select year_of_sales,region,dept_name,sum(profit) from sales group by cube(region,dept_name),year_of_sales;

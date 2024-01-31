@@ -1,0 +1,25 @@
+Partial Rollup
+Q2). Apply partial rollup on same table.
+CREATE TABLE sales
+(
+ dept_id number,
+ dept_name varchar2(20),
+ year_of_sales number,
+ region varchar2(20),
+ profit number
+);
+INSERT INTO sales values(101,'Sales',2020,'Mumbai','50000');
+INSERT INTO sales values(101,'Sales',2018,'','70000');
+INSERT INTO sales values(101,'Sales',2019,'Mumbai','20000');
+INSERT INTO sales values(101,'Sales',2020,'Delhi','45000');
+INSERT INTO sales values(102,'IT',2018,'Mumbai','40000');
+INSERT INTO sales values(102,'IT',2015,'Mumbai','30000');
+INSERT INTO sales values(102,'IT',2016,'Delhi','10000');
+INSERT INTO sales values(102,'IT',2020,'Mumbai','80000');
+
+
+1. Display region wise total profit.
+SELECT region,sum(profit) from sales group by rollup(region);
+
+1. Display region wise total profit of each department by partially rolling the year.
+Select region,year_of_sales,sum(profit) from sales group by year_of_sales,rollup(region);

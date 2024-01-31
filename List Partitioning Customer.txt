@@ -1,0 +1,44 @@
+Q1. Create a table to store customer details custid, cname, state with 4 different partitions for 4
+different regions north, south, east and west using the list partition.
+
+CREATE TABLE customer(
+custid NUMBER,
+cname VARCHAR(25),
+state VARCHAR(25)
+)
+PARTITION BY LIST(state)
+(
+PARTITION south
+VALUES('TAMILNADU','TELANGANA','KERALA','KARNATAKA'),
+PARTITION north
+VALUES('HARYANA','UTTARAKHAND','DELHI','HIMANCHALPRADESH'),
+PARTITION east VALUES('MANIPUR','ASSAM','NAGALAND','MIZORAM'),
+PARTITION west VALUES('MAHARASHTRA','GUJRAT','GOA','RAJASTHAN')
+);
+INSERT INTO customer VALUES(32, 'SAINATH', 'TELANGANA');
+INSERT INTO customer VALUES(25, 'ROHIT', 'MIZORAM');
+INSERT INTO customer VALUES(47, 'VIVEK', 'KARNATAKA');
+INSERT INTO customer VALUES(65, 'PRATHAM', 'DELHI');
+
+1. Display data from all the partitions.
+select * from customer;
+
+2. Split the partition south into s1 with Kerala and tamilnadu and s2 with the remaining data.
+ALTER TABLE customer SPLIT PARTITION south VALUES('KERALA','TAMILNADU') INTO (PARTITION s1, PARTITION s2);
+SELECT * FROM customer PARTITION(s1);
+
+3. Display the contents of new partition.
+SELECT PARTITION_NAME FROM USER_TAB_PARTITIONS where TABLE_NAME=’CUSTOMER’;
+
+4. Merge the partition back.
+ALTER TABLE customer MERGE PARTITIONS s1, s2 INTO PARTITION south;
+SELECT * FROM customer PARTITION(south);
+
+5. Modify an existing partition east to add Meghalaya and tripura.
+ALTER TABLE customer MODIFY PARTITION east ADD VALUES('MEGHALAYA','TRIPURA');
+SELECT * FROM customer PARTITION(east);
+SELECT TABLE_NAME, PARTITION_NAME, HIGH_VALUE from USER_TAB_PARTITIONS where TABLE_NAME ='CUSTOMER';
+
+6. Add new partition Central.
+ALTER TABLE customer ADD PARTITION central VALUES('MADHYAPRADESH','CHATTISGARH','BIHAR');
+SELECT TABLE_NAME, PARTITION_NAME, HIGH_VALUE from USER_TAB_PARTITIONS where TABLE_NAME ='CUSTOMER';
