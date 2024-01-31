@@ -1,0 +1,40 @@
+Q. Copy the contents of Excel to another table in pentaho 
+
+1.Launch Pentaho Data Integration:
+Open Pentaho Data Integration on your machine.
+
+2. Create a New Transformation:
+Click on "File" -> "New" -> "Transformation."
+
+3. Add "Excel Input" Step:
+Drag and drop the "Excel Input" step from the "Input" category in the Design palette onto the canvas.
+Double-click on the step to configure it.
+
+4.Configure "Excel Input" Step:
+In the "File" tab, specify the Excel file path in the "File or directory" field.
+Configure other settings such as the sheet name, header row, etc.
+Click "OK" to save the configuration.
+
+5. Add "Table Output" Step:
+Drag and drop the "Table Output" step from the "Output" category in the Design palette onto the canvas.
+Connect the "Excel Input" step to the "Table Output" step.
+
+6. Configure "Table Output" Step:
+Double-click on the "Table Output" step to configure it.
+In the "Connection" tab, create a new database connection or use an existing one.
+Specify the target table where you want to copy the data.
+
+Database Name: postgres
+Port Number: 5432
+Username: postgres
+password:student
+
+Click "OK" to save the configuration.
+
+7. Connect the Steps:
+Connect the "Excel Input" step to the "Table Output" step.
+You can do this by clicking on the output arrow of the "Excel Input" step and dragging it to the input of the "Table Output" step.
+
+8. Run the Transformation:
+Save your transformation.
+Click on the "Run" button to execute the transformation.
